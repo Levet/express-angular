@@ -1,6 +1,7 @@
 <div class="content" role="main">
 
  <h1>Todo</h1>
+ {{ incomepleteCount() }} of {{ totalTaskCount() }} remaining
  <ul>
     <h6 *ngIf="loading; else elseBlock">Loading...</h6>
     <ng-template #elseBlock>

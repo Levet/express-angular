@@ -10,7 +10,7 @@ import { Task } from './tasks/task';
 })
 export class AppComponent implements OnInit {
   loading = false;
-  tasks = null;
+  tasks: Task[] = [];
 
   constructor(private tasksService: TasksService) { }
 
@@ -44,5 +44,13 @@ export class AppComponent implements OnInit {
   toggleTaskStatus(task: Task) {
     task.complete = !task.complete;
     this.updateTask(task);
+  }
+
+  incomepleteCount() {
+    return this.tasks.filter((task: Task) => !task.complete).length;
+  }
+
+  totalTaskCount() {
+    return this.tasks.length;
   }
 }
