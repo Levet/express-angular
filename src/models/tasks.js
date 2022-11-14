@@ -10,8 +10,12 @@ module.exports = class Tasks {
         this.tasks = JSON.parse(file);
     }
 
-    createTask(task) {
-        task.completed = false;
+    createTask(taskTitle) {
+        const task = {
+            id: this.tasks.length + 1,
+            title: taskTitle,
+            complete: false
+        }
         this.tasks.push(task);
         this.save();
         return task;
@@ -22,6 +26,14 @@ module.exports = class Tasks {
     }
 
     save() {
-        fs.writeFileSync('./data/tasks.json', JSON.stringify(this.tasks));
+        fs.writeFileSync('./src/data/tasks.json', JSON.stringify(this.tasks));
+    }
+
+    updateTask(id, task) {
+        const index = this.tasks.findIndex(t => t.id == id);
+        if(index < 0) return;
+        this.tasks[index] = task;
+        this.save();
+        return task;
     }
 }

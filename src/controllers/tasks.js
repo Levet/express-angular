@@ -3,13 +3,13 @@ const TasksModel = require('../models/tasks');
 
 module.exports = class Tasks extends Controller {
     constructor(req, res) {
-        super();
+        super(req, res);
         this.model = new TasksModel();
-        this.req = req;
-        this.res = res;
-        this.schema = {
+        this.schema = this.Joi.object({
+            id: this.Joi.number().integer(),
             title: this.Joi.string().required(),
-        }
+            complete: this.Joi.boolean(),
+        });
     }
 
     async list() {
@@ -18,8 +18,17 @@ module.exports = class Tasks extends Controller {
     }
 
     async create() {
-        this.validate();
-        const task = await this.model.createTask(this.req.body);
+        const valid = this.validate();
+        if(valid !== true) return;
+        
+        const task = await this.model.createTask(this.req.body.title);
+        this.successResponse(task);
+    }
+
+    async update() {
+        const valid = this.validate();
+        if(valid !== true) return;
+        const task = await this.model.updateTask(this.req.params.id, this.req.body);
         this.successResponse(task);
     }
 }

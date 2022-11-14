@@ -1,9 +1,11 @@
 const Joi = require('joi');
 
 module.exports = class Controller {
-    constructor() {
+    constructor(req, res) {
         this.model = null;
         this.Joi = Joi;
+        this.req = req;
+        this.res = res;
     }
 
     validate() {
@@ -17,17 +19,17 @@ module.exports = class Controller {
             return this.validationFailureResponse(result.error);
         }
 
-        return;
+        return true;
     }
 
     validationFailureResponse(error) {
-        this.res.status(422).json({
+        return this.res.status(422).json({
             error
         });
     }
 
     successResponse(data) {
-        this.res.json({
+        return this.res.json({
             data
         });
     }

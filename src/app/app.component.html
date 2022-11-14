@@ -2,10 +2,15 @@
 
  <h1>Todo</h1>
  <ul>
-    <li *ngFor="let task of tasks">
-      <input type="checkbox" [checked]="task.completed">
-      <span>{{task.title}}</span>
-    </li>
+    <h6 *ngIf="loading; else elseBlock">Loading...</h6>
+    <ng-template #elseBlock>
+      <li *ngFor="let task of tasks">
+        <input type="checkbox" [checked]="task.complete" (change)="toggleTaskStatus(task)">
+        <span>{{task.title}}</span>
+      </li>
+      <input type="text" #newTaskTitle>
+      <button (click)="createTask(newTaskTitle.value);">Add</button>
+    </ng-template>
  </ul>
 
 </div>

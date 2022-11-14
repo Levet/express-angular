@@ -9,6 +9,11 @@ module.exports = (app) => {
 
     app.post('/api/tasks', (req, res) => {
         const taskController = new TaskController(req, res);
-        taskController.create(req, res);
+        taskController.create();
+    });
+
+    app.put('/api/tasks/:id', (req, res) => {
+        const taskController = new TaskController(req, res);
+        taskController.update();
     });
 }
