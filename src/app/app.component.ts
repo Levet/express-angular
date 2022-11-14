@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'express-angular';
+  tasks = [
+    { title: 'Do homework', completed: false },
+  ]
 }
